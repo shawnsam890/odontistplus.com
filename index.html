@@ -3172,66 +3172,68 @@ letter-spacing:-0.02em;
 color:#9ca3c7;
 font-size:18px;
 max-width:600px;
-margin:0 auto;
+margin:0 auto 40px;
 line-height:1.6;
 }
 
-/* Pricing Toggle */
-.pricing-toggle-wrapper{
-display:flex;
-justify-content:center;
-margin-bottom:50px;
-}
-
-.pricing-toggle{
-display:flex;
-gap:4px;
-padding:6px;
-background:rgba(255,255,255,0.05);
-border-radius:50px;
-border:1px solid rgba(255,255,255,0.08);
-backdrop-filter:blur(10px);
-}
-
-.toggle-btn{
-padding:12px 28px;
-border-radius:50px;
-border:none;
-background:transparent;
-color:#9ca3c7;
-font-size:15px;
-font-weight:500;
-cursor:pointer;
-transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+/* Special Launch Pricing Badge */
+.launch-pricing-badge{
 position:relative;
+display:inline-flex;
+justify-content:center;
+margin:0 auto 40px;
+left:50%;
+transform:translateX(-50%);
 }
 
-.toggle-btn.active{
-background:linear-gradient(135deg,rgba(92,124,255,0.2),rgba(161,76,255,0.2));
-color:#fff;
-box-shadow:0 4px 20px rgba(120,120,255,0.3);
+.launch-badge-pulse{
+position:absolute;
+inset:-6px;
+background:linear-gradient(135deg,#fbbf24,#f59e0b);
+border-radius:50px;
+filter:blur(12px);
+opacity:0.5;
+animation:launch-pulse 2s ease-in-out infinite;
+z-index:-1;
 }
 
-.toggle-btn:hover:not(.active){
-color:#c7d2ff;
-background:rgba(255,255,255,0.05);
+@keyframes launch-pulse{
+0%,100%{opacity:0.4;transform:scale(1);}
+50%{opacity:0.7;transform:scale(1.05);}
 }
 
-.save-badge{
-display:inline-block;
-margin-left:8px;
-padding:3px 10px;
-background:linear-gradient(135deg,#4ade80,#22c55e);
+.launch-badge-text{
+display:block;
+background:linear-gradient(135deg,#fbbf24,#f59e0b);
 color:#000;
-font-size:11px;
-font-weight:600;
-border-radius:20px;
-animation:pulse-badge 2s ease-in-out infinite;
+padding:10px 24px;
+border-radius:50px;
+font-size:13px;
+font-weight:700;
+letter-spacing:0.5px;
+position:relative;
+box-shadow:0 4px 20px rgba(251,191,36,0.4);
 }
 
-@keyframes pulse-badge{
-0%,100%{transform:scale(1);opacity:1;}
-50%{transform:scale(1.05);opacity:0.9;}
+/* Plan Price Stack with Strikethrough */
+.plan-price-stack{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+margin-bottom:8px;
+}
+
+.price-original{
+font-size:16px;
+color:#64748b;
+text-decoration:line-through;
+font-weight:500;
+opacity:0.7;
+}
+
+.plan-price{
+margin-bottom:0;
 }
 
 /* Pricing Grid */
@@ -3574,6 +3576,20 @@ background:linear-gradient(180deg,transparent,rgba(255,255,255,0.1),transparent)
 color:#64748b;
 font-size:14px;
 letter-spacing:0.5px;
+}
+
+/* Trial Note */
+.trial-note{
+text-align:center;
+margin-top:-40px;
+margin-bottom:60px;
+}
+
+.trial-note p{
+color:#64748b;
+font-size:14px;
+font-weight:400;
+opacity:0.8;
 }
 
 /* Micro-brand elements */
@@ -5729,12 +5745,10 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <p class="pricing-subtitle">Choose the perfect plan for your dental clinic. Start with our free trial and upgrade as you grow.</p>
 </div>
 
-<!-- Pricing Toggle -->
-<div class="pricing-toggle-wrapper">
-<div class="pricing-toggle">
-<button class="toggle-btn active" data-period="monthly">Monthly</button>
-<button class="toggle-btn" data-period="yearly">Yearly <span class="save-badge">Save 20%</span></button>
-</div>
+<!-- Special Launch Pricing Badge -->
+<div class="launch-pricing-badge">
+<span class="launch-badge-pulse"></span>
+<span class="launch-badge-text">Special Launch Pricing</span>
 </div>
 
 <div class="pricing-grid">
@@ -5743,9 +5757,12 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <div class="card-glow-layer"></div>
 <div class="card-inner">
 <h3 class="plan-name">Starter</h3>
+<div class="plan-price-stack">
+<div class="price-original">₹19,000</div>
 <div class="plan-price">
-<span class="price-value">₹5,499</span>
-<span class="price-period">/month</span>
+<span class="price-value">₹12,999</span>
+<span class="price-period">/year</span>
+</div>
 </div>
 <p class="plan-description">Perfect for small dental clinics with basic needs</p>
 <ul class="plan-features">
@@ -5770,11 +5787,11 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <span>Email support</span>
 </li>
 </ul>
-<button class="plan-button glass-btn">Start Free Trial</button>
+<button class="plan-button glass-btn">Start 3-Day Free Trial</button>
 </div>
 </div>
 
-<!-- Professional Plan (Featured) -->
+<!-- Premium Plan (Featured) -->
 <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="100">
 <div class="featured-glow"></div>
 <div class="card-glow-layer"></div>
@@ -5783,10 +5800,13 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <span class="badge-text">Most Popular</span>
 </div>
 <div class="card-inner">
-<h3 class="plan-name">Professional</h3>
+<h3 class="plan-name">Premium</h3>
+<div class="plan-price-stack">
+<div class="price-original">₹25,000</div>
 <div class="plan-price">
-<span class="price-value">₹12,999</span>
-<span class="price-period">/month</span>
+<span class="price-value">₹16,999</span>
+<span class="price-period">/year</span>
+</div>
 </div>
 <p class="roi-microcopy">Pays for itself with just 2–3 treatments/month</p>
 <p class="plan-description">Ideal for growing dental practices with advanced needs</p>
@@ -5820,7 +5840,7 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <span>Priority support</span>
 </li>
 </ul>
-<button class="plan-button gradient-btn">Start Free Trial</button>
+<button class="plan-button gradient-btn">Start 3-Day Free Trial</button>
 </div>
 </div>
 
@@ -5862,6 +5882,11 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <button class="plan-button glass-btn">Contact Sales</button>
 </div>
 </div>
+</div>
+
+<!-- Trial Note -->
+<div class="trial-note">
+<p>3-day free trial. No upfront payment. Activate subscription anytime.</p>
 </div>
 
 <!-- Trust Line -->
@@ -6089,52 +6114,6 @@ if (odontogramStage && odontogramTooltip) {
     }
   });
 }
-
-/* PRICING TOGGLE */
-const toggleBtns = document.querySelectorAll('.toggle-btn');
-const priceValues = {
-  starter: { monthly: '₹5,499', yearly: '₹4,399' },
-  professional: { monthly: '₹12,999', yearly: '₹10,399' }
-};
-
-toggleBtns.forEach(btn => {
-  btn.addEventListener('click', function() {
-    toggleBtns.forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    const period = this.dataset.period;
-
-    // Update prices with animation
-    const cards = document.querySelectorAll('.pricing-card');
-    cards.forEach(card => {
-      const priceValue = card.querySelector('.price-value');
-      const pricePeriod = card.querySelector('.price-period');
-      const planName = card.querySelector('.plan-name').textContent;
-
-      if (planName === 'Starter') {
-        priceValue.style.opacity = '0';
-        setTimeout(() => {
-          priceValue.textContent = priceValues.starter[period];
-          priceValue.style.opacity = '1';
-        }, 150);
-      } else if (planName === 'Professional') {
-        priceValue.style.opacity = '0';
-        setTimeout(() => {
-          priceValue.textContent = priceValues.professional[period];
-          priceValue.style.opacity = '1';
-        }, 150);
-      }
-
-      // Show/hide period based on selection
-      if (period === 'yearly' && pricePeriod) {
-        pricePeriod.textContent = '/year';
-        pricePeriod.style.opacity = '0.7';
-      } else if (pricePeriod) {
-        pricePeriod.textContent = '/month';
-        pricePeriod.style.opacity = '0.7';
-      }
-    });
-  });
-});
 
 /* PRICING PARTICLES */
 const pricingParticles = document.getElementById('pricing-particles');
