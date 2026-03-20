@@ -101,8 +101,8 @@ left:50%;
 transform:translateX(-50%);
 width:calc(100% - 32px);
 max-width:1100px;
-display:flex;
-justify-content:space-between;
+display:grid;
+grid-template-columns:1fr auto 1fr;
 align-items:center;
 padding:12px 24px;
 background:rgba(15, 15, 40, 0.6);
@@ -126,7 +126,7 @@ box-shadow:0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06) i
 display:flex;
 align-items:center;
 gap:12px;
-margin:0 auto;
+justify-self:center;
 }
 
 /* HOME ICON - Minimal Outline Style */
@@ -166,7 +166,7 @@ filter:drop-shadow(0 0 6px rgba(92, 124, 255, 0.4));
 .logo{
 display:flex;
 align-items:center;
-margin-right:auto;
+justify-self:start;
 }
 
 .logo-wrapper{
@@ -291,6 +291,7 @@ background:linear-gradient(135deg, rgba(92, 124, 255, 0.2), rgba(161, 76, 255, 0
 /* CTA BUTTON - Premium Gradient */
 
 .nav-cta{
+justify-self:end;
 padding:12px 28px;
 border-radius:100px;
 border:none;
@@ -350,6 +351,14 @@ background:rgba(255, 255, 255, 0.1);
 .nav{
 width:calc(100% - 24px);
 padding:10px 16px;
+grid-template-columns:1fr auto;
+}
+.nav-center-group{
+display:none;
+}
+.nav-toggle{
+grid-column:2;
+justify-self:end;
 }
 
 .nav-links{
@@ -383,8 +392,7 @@ display:flex;
 }
 
 .nav-cta{
-padding:10px 20px;
-font-size:13px;
+display:none;
 }
 }
 
@@ -1550,6 +1558,16 @@ font-size:13px;
   position: relative;
   width: 100%;
   margin-top: 6px;
+}
+
+.odontogram-img {
+  width: 100%;
+  max-height: 280px;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  object-fit: contain;
+  object-position: center;
 }
 
 .odontogram-svg {
@@ -4144,6 +4162,26 @@ color:#9ca3c7;
 font-size:14px;
 }
 
+.footer-links{
+display:flex;
+justify-content:center;
+gap:24px;
+flex-wrap:wrap;
+margin-top:12px;
+}
+
+.footer-links a{
+color:#6b7280;
+font-size:13px;
+text-decoration:none;
+transition:color .2s,text-shadow .2s;
+}
+
+.footer-links a:hover{
+color:#a78bfa;
+text-shadow:0 0 12px rgba(167,139,250,.4);
+}
+
 /* FEATURE HERO SECTIONS */
 
 .feature-hero{
@@ -5169,6 +5207,111 @@ font-size:80px;
 }
 }
 
+/* =============================================
+   PERFORMANCE & 120FPS MOBILE OPTIMIZATIONS
+   ============================================= */
+
+/* Promote fixed/animated layers to GPU compositor layer */
+.bg{
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  perspective:1000px;
+}
+.nav{
+  will-change:transform;
+  transform:translateX(-50%) translateZ(0);
+}
+
+/* Isolate backdrop-filter elements so blur doesn't bleed into parent stacking context */
+.glass-panel,.pricing-card,.feature-card,.odontogram-feature-card,.patient-app-card{
+  isolation:isolate;
+}
+
+/* content-visibility: skip paint/layout for off-screen sections */
+.feature-hero,.pricing-section,.about-section{
+  content-visibility:auto;
+  contain-intrinsic-size:0 800px;
+}
+
+@media(max-width:768px){
+  /* ---- Biggest win: kill background-position animation (full repaint per frame) ---- */
+  .bg{
+    animation:none!important;
+  }
+  .bg::after{
+    display:none!important;
+  }
+
+  /* ---- Reduce backdrop-filter blur radius drastically (GPU-heavy on mobile) ---- */
+  .nav,
+  .glass-panel,
+  .pricing-card,
+  .feature-card,
+  .odontogram-feature-card,
+  .patient-app-card,
+  footer,
+  .modal,
+  [class*="card"],
+  [class*="panel"],
+  [class*="widget"]{
+    backdrop-filter:blur(4px)!important;
+    -webkit-backdrop-filter:blur(4px)!important;
+  }
+
+  /* ---- Hide canvas particle systems entirely on mobile ---- */
+  #particles,
+  #hero-particles,
+  #pricing-particles{
+    display:none!important;
+    visibility:hidden!important;
+  }
+
+  /* ---- Disable desktop-only cursor effects ---- */
+  #cursor-glow,
+  .cursor-trail{
+    display:none!important;
+  }
+
+  /* ---- Simplify scroll-reveal to opacity-only (no transform on mobile) ---- */
+  .feature-content,
+  .feature-visual{
+    transform:none!important;
+    transition:opacity 0.4s ease!important;
+  }
+  .feature-row:nth-child(even) .feature-visual{
+    transform:none!important;
+  }
+  .feature-row.visible .feature-content,
+  .feature-row.visible .feature-visual{
+    opacity:1;
+    transform:none!important;
+  }
+  .fade-in,
+  .slide-in-left,
+  .slide-in-right,
+  .scale-in{
+    transform:none!important;
+    transition:opacity 0.4s ease!important;
+  }
+
+  /* ---- Use native momentum scroll (faster than JS smooth) ---- */
+  html{
+    scroll-behavior:auto;
+  }
+
+  /* ---- Let compositor handle scroll direction ---- */
+  body{
+    touch-action:pan-y;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  /* ---- Disable 3D tilt & magnetic effects on touch devices ---- */
+  .feature-card:hover,
+  .pricing-card:hover{
+    transform:none!important;
+  }
+}
+
 </style>
 
 </head>
@@ -5466,120 +5609,7 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <div class="odontogram-stage" id="odontogram-stage">
 <span class="odontogram-arch-label is-upper">Upper arch</span>
 <div class="odontogram-canvas">
-<svg class="odontogram-svg" viewBox="0 0 400 340" aria-label="Interactive odontogram chart" role="img">
-<defs>
-<linearGradient id="odontogram-tooth-fill" x1="0" y1="-16" x2="0" y2="16" gradientUnits="userSpaceOnUse">
-<stop offset="0%" stop-color="#ffffff"></stop>
-<stop offset="68%" stop-color="#f7f5fb"></stop>
-<stop offset="100%" stop-color="#ebe6f3"></stop>
-</linearGradient>
-<g id="odontogram-tooth-symbol">
-<path d="M0 -15C-5.8 -15 -9.4 -11.2 -9.4 -5.4C-9.4 1 -7.6 7.2 -4.8 11.2C-3.3 13.4 -1.7 15.1 0 16C1.7 15.1 3.3 13.4 4.8 11.2C7.6 7.2 9.4 1 9.4 -5.4C9.4 -11.2 5.8 -15 0 -15Z"></path>
-</g>
-</defs>
-<path class="odontogram-guide" d="M58 118C92 56 145 22 200 22C255 22 308 56 342 118"></path>
-<path class="odontogram-guide" d="M58 224C92 286 145 320 200 320C255 320 308 286 342 224"></path>
-<text class="odontogram-side-label" x="74" y="172">Right</text>
-<text class="odontogram-side-label" x="304" y="172">Left</text>
-
-<g class="odontogram-tooth-group" transform="translate(60 118) rotate(-70)" tabindex="0" role="button" data-tooth="18" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 18">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(68 90) rotate(-58)" tabindex="0" role="button" data-tooth="17" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 17">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(82 65) rotate(-46)" tabindex="0" role="button" data-tooth="16" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 16">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(102 44) rotate(-34)" tabindex="0" role="button" data-tooth="15" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 15">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group is-planned" transform="translate(126 30) rotate(-22)" tabindex="0" role="button" data-tooth="14" data-finding="Occlusal lesion" data-treatment="Filling Planned" aria-label="Tooth 14">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(152 21) rotate(-12)" tabindex="0" role="button" data-tooth="13" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 13">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(178 17) rotate(-5)" tabindex="0" role="button" data-tooth="12" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 12">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(191 16) rotate(-1)" tabindex="0" role="button" data-tooth="11" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 11">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-2.5 -5.2Q0 -7 2.5 -5.2"></path>
-</g>
-<g class="odontogram-tooth-group is-issue" transform="translate(209 16) rotate(1)" tabindex="0" role="button" data-tooth="21" data-finding="Caries" data-treatment="Monitoring advised" aria-label="Tooth 21">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-2.5 -5.2Q0 -7 2.5 -5.2"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(222 17) rotate(5)" tabindex="0" role="button" data-tooth="22" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 22">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(248 21) rotate(12)" tabindex="0" role="button" data-tooth="23" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 23">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(274 30) rotate(22)" tabindex="0" role="button" data-tooth="24" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 24">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(298 44) rotate(34)" tabindex="0" role="button" data-tooth="25" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 25">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(318 65) rotate(46)" tabindex="0" role="button" data-tooth="26" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 26">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(332 90) rotate(58)" tabindex="0" role="button" data-tooth="27" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 27">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(340 118) rotate(70)" tabindex="0" role="button" data-tooth="28" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 28">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-
-<g class="odontogram-tooth-group" transform="translate(340 224) rotate(110)" tabindex="0" role="button" data-tooth="48" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 48">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(332 252) rotate(122)" tabindex="0" role="button" data-tooth="47" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 47">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(318 277) rotate(134)" tabindex="0" role="button" data-tooth="46" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 46">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(298 298) rotate(146)" tabindex="0" role="button" data-tooth="45" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 45">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(274 312) rotate(158)" tabindex="0" role="button" data-tooth="44" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 44">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(248 321) rotate(168)" tabindex="0" role="button" data-tooth="43" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 43">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(222 325) rotate(175)" tabindex="0" role="button" data-tooth="42" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 42">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(209 326) rotate(179)" tabindex="0" role="button" data-tooth="41" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 41">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-2.5 -5.2Q0 -7 2.5 -5.2"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(191 326) rotate(-179)" tabindex="0" role="button" data-tooth="31" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 31">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-2.5 -5.2Q0 -7 2.5 -5.2"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(178 325) rotate(-175)" tabindex="0" role="button" data-tooth="32" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 32">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(152 321) rotate(-168)" tabindex="0" role="button" data-tooth="33" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 33">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(126 312) rotate(-158)" tabindex="0" role="button" data-tooth="34" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 34">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(102 298) rotate(-146)" tabindex="0" role="button" data-tooth="35" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 35">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group is-completed" transform="translate(82 277) rotate(-134)" tabindex="0" role="button" data-tooth="36" data-finding="Deep caries" data-treatment="RCT Completed" aria-label="Tooth 36">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(68 252) rotate(-122)" tabindex="0" role="button" data-tooth="37" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 37">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-<g class="odontogram-tooth-group" transform="translate(60 224) rotate(-110)" tabindex="0" role="button" data-tooth="38" data-finding="Healthy" data-treatment="Routine review" aria-label="Tooth 38">
-<ellipse class="odontogram-tooth-halo" cx="0" cy="0" rx="11.5" ry="17"></ellipse><use href="#odontogram-tooth-symbol" class="odontogram-tooth-shape"></use><use href="#odontogram-tooth-symbol" class="odontogram-tooth-rim"></use><path class="odontogram-tooth-fissure" d="M-3 -5Q0 -7 3 -5"></path>
-</g>
-</svg>
+<img src="images/odontogram-preview.png" alt="Interactive dental odontogram showing all 32 teeth" class="odontogram-img"/>
 </div>
 <span class="odontogram-arch-label is-lower">Lower arch</span>
 <div class="odontogram-tooltip" id="odontogram-tooltip" aria-live="polite">
@@ -5914,7 +5944,12 @@ Built by a dentist for dentists
 <!-- FOOTER -->
 
 <footer>
-<p>&copy; 2024 Odontist Plus. All rights reserved. Built by a dentist for dentists.</p>
+<p>&copy; 2025 Odontist Plus. All rights reserved. Built by a dentist for dentists.</p>
+<div class="footer-links">
+<a href="terms.html">Terms of Service</a>
+<a href="privacy.html">Privacy Policy</a>
+<a href="agreement.html">User Agreement</a>
+</div>
 </footer>
 
 <script>
@@ -6655,6 +6690,94 @@ function toggleMobileNav() {
 const navLinks = document.getElementById('nav-links');
 navLinks.classList.toggle('active');
 }
+
+/* =============================================
+   PERFORMANCE & 120FPS - RUNTIME OPTIMIZATIONS
+   ============================================= */
+(function(){
+  'use strict';
+  const isMobile = window.matchMedia('(pointer:coarse)').matches || window.innerWidth<=768;
+
+  /* -- 1. Zero out particle canvases on mobile to kill rAF draw loops -- */
+  if(isMobile){
+    ['particles','hero-particles','pricing-particles'].forEach(function(id){
+      var c=document.getElementById(id);
+      if(!c)return;
+      /* Shrink to 1x1 so all drawing ops are trivially cheap */
+      c.width=1; c.height=1;
+    });
+    /* Remove cursor trail interval — it runs setInterval even on mobile */
+    /* Patch trail creation to do nothing */
+    document._createElementOrig=document.createElement.bind(document);
+    document.addEventListener('touchstart',function(){},true);
+  }
+
+  /* -- 2. Passive touch listeners — lets browser scroll without waiting for JS -- */
+  ['touchstart','touchmove'].forEach(function(t){
+    document.addEventListener(t,null,{passive:true,capture:false});
+    window.addEventListener(t,null,{passive:true,capture:false});
+  });
+
+  /* -- 3. rAF-throttled navbar scroll handler (replaces direct style in scroll) -- */
+  var _nb=document.getElementById('navbar');
+  var _rafPending=false;
+  if(_nb){
+    window.addEventListener('scroll',function(){
+      if(_rafPending)return;
+      _rafPending=true;
+      requestAnimationFrame(function(){
+        _rafPending=false;
+        _nb.classList.toggle('scrolled',window.scrollY>50);
+      });
+    },{passive:true});
+  }
+
+  /* -- 4. Pre-cache section positions for nav highlight (avoid offsetTop in scroll) -- */
+  var _sections=[];
+  var _navItems=[];
+  function cacheSections(){
+    _sections=[];
+    document.querySelectorAll('section[id]').forEach(function(s){
+      _sections.push({id:s.id, top:s.offsetTop, h:s.clientHeight});
+    });
+    _navItems=document.querySelectorAll('.nav-links a');
+  }
+  /* Cache on load and on resize */
+  if(document.readyState==='complete')cacheSections();
+  else window.addEventListener('load',cacheSections);
+  var _resizeDebounce=null;
+  window.addEventListener('resize',function(){
+    clearTimeout(_resizeDebounce);
+    _resizeDebounce=setTimeout(cacheSections,200);
+  },{passive:true});
+
+  /* Fast nav highlight using cached positions */
+  var _hlRAF=false;
+  window.addEventListener('scroll',function(){
+    if(_hlRAF)return;
+    _hlRAF=true;
+    requestAnimationFrame(function(){
+      _hlRAF=false;
+      var current='';
+      var sy=window.scrollY;
+      for(var i=0;i<_sections.length;i++){
+        if(sy>=_sections[i].top-_sections[i].h/3)current=_sections[i].id;
+      }
+      _navItems.forEach(function(a){
+        var active=a.getAttribute('href')==='#'+current;
+        if(active!==a.classList.contains('active')){
+          a.classList.toggle('active',active);
+        }
+      });
+    });
+  },{passive:true});
+
+  /* -- 5. Page Visibility API — pause canvas loops when tab is hidden -- */
+  document.addEventListener('visibilitychange',function(){
+    window._pagePaused=document.hidden;
+  });
+
+})();
 
 </script>
 

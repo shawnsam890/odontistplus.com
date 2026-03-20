@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Odontist+</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:#050617;color:white;overflow-x:hidden;min-height:100vh;}
+
+.bg{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(90,120,255,.3),transparent 45%),
+    radial-gradient(circle at 80% 70%,rgba(180,80,255,.25),transparent 45%);
+  z-index:-1;
+}
+
+/* NAVBAR */
+.nav{
+  position:sticky;top:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 8%;
+  background:rgba(15,15,40,.7);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  z-index:100;
+}
+.nav-logo{
+  font-size:18px;font-weight:700;
+  background:linear-gradient(135deg,#5c7cff,#a14cff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-decoration:none;
+}
+.nav-logo span{
+  background:linear-gradient(135deg,#8ec5ff,#b98aff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.nav-back{
+  display:flex;align-items:center;gap:6px;
+  color:#9ca3c7;text-decoration:none;font-size:14px;font-weight:500;
+  transition:color .2s;
+}
+.nav-back:hover{color:#a78bfa;}
+.nav-back svg{width:16px;height:16px;}
+
+/* HERO */
+.legal-hero{
+  padding:64px 8% 32px;
+  text-align:center;
+}
+.legal-badge{
+  display:inline-block;
+  padding:6px 16px;
+  background:rgba(92,124,255,.12);
+  border:1px solid rgba(92,124,255,.25);
+  border-radius:100px;
+  font-size:12px;font-weight:600;letter-spacing:.08em;
+  color:#8ec5ff;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.legal-hero h1{
+  font-size:clamp(28px,5vw,48px);font-weight:700;line-height:1.15;
+  background:linear-gradient(135deg,#fff 0%,#c4b5ff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:12px;
+}
+.legal-hero p{
+  color:#9ca3c7;font-size:15px;max-width:520px;margin:0 auto;
+}
+.legal-meta{
+  margin-top:16px;font-size:13px;color:#6b7280;
+}
+
+/* CONTENT */
+.legal-container{
+  max-width:860px;margin:0 auto;padding:48px 8% 96px;
+}
+.legal-card{
+  background:rgba(15,15,40,.5);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:48px;
+  margin-bottom:24px;
+}
+.legal-card h2{
+  font-size:20px;font-weight:600;
+  background:linear-gradient(135deg,#a8c6ff,#c4b5ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:16px;
+  padding-bottom:12px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.legal-card h3{
+  font-size:15px;font-weight:600;color:#c4b5ff;
+  margin:20px 0 8px;
+}
+.legal-card p{
+  color:#b0bcd4;font-size:15px;line-height:1.75;margin-bottom:12px;
+}
+.legal-card ul{
+  list-style:none;padding:0;margin:8px 0 12px;
+}
+.legal-card ul li{
+  color:#b0bcd4;font-size:15px;line-height:1.75;
+  padding-left:20px;position:relative;margin-bottom:6px;
+}
+.legal-card ul li::before{
+  content:"";
+  position:absolute;left:0;top:10px;
+  width:6px;height:6px;border-radius:50%;
+  background:linear-gradient(135deg,#5c7cff,#a14cff);
+}
+.legal-card a{color:#8ec5ff;text-decoration:none;}
+.legal-card a:hover{text-decoration:underline;}
+.highlight-box{
+  background:rgba(92,124,255,.1);
+  border:1px solid rgba(92,124,255,.2);
+  border-radius:12px;
+  padding:16px 20px;
+  margin:16px 0;
+}
+.highlight-box p{color:#c4d6ff;margin:0;}
+
+/* FOOTER */
+footer{
+  background:rgba(15,15,40,.35);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:32px 8%;text-align:center;
+}
+.footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:12px;}
+.footer-links a{
+  color:#6b7280;font-size:13px;text-decoration:none;
+  transition:color .2s,text-shadow .2s;
+}
+.footer-links a:hover{color:#a78bfa;text-shadow:0 0 12px rgba(167,139,250,.4);}
+footer p{color:#9ca3c7;font-size:14px;}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<!-- NAVBAR -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Odontist<span>+</span></a>
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    Back to Home
+  </a>
+</nav>
+
+<!-- HERO -->
+<div class="legal-hero">
+  <div class="legal-badge">Legal</div>
+  <h1>Terms of Service</h1>
+  <p>Please read these terms carefully before using Odontist+ clinic management software.</p>
+  <div class="legal-meta">Effective Date: January 1, 2025 &nbsp;·&nbsp; Last Updated: March 2026</div>
+</div>
+
+<!-- CONTENT -->
+<div class="legal-container">
+
+  <div class="legal-card">
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using the Odontist+ application, website, or any related services (collectively, the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the Service.</p>
+    <p>These Terms apply to all users, including dental professionals, clinic administrators, and any other individuals who access the Service.</p>
+  </div>
+
+  <div class="legal-card">
+    <h2>2. Description of Service</h2>
+    <p>Odontist+ is a cloud-based dental clinic management platform designed for dental professionals. The Service includes, but is not limited to:</p>
+    <ul>
+      <li>Patient record management and dental charting (odontogram)</li>
+      <li>Appointment scheduling and calendar management</li>
+      <li>Treatment planning and documentation</li>
+      <li>Billing, invoicing, and payment tracking</li>
+      <li>Prescription and lab request management</li>
+      <li>Team and staff management tools</li>
+      <li>Analytics and reports for clinic performance</li>
+    </ul>
+    <p>We reserve the right to modify, suspend, or discontinue any part of the Service at any time with reasonable notice.</p>
+  </div>
+
+  <div class="legal-card">
+    <h2>3. Account Registration &amp; Phone Authentication</h2>
+    <p>To access Odontist+, you must create an account. During registration, you will be required to provide a valid mobile phone number for identity verification.</p>
+    <div class="highlight-box">
+      <p><strong>Phone Authentication:</strong> We use Firebase Authentication (provided by Google LLC) to verify your phone number via a one-time password (OTP). Your phone number is used solely for authentication and is not shared with third parties or used for marketing purposes.</p>
+    </div>
+    <h3>You agree to:</h3>
+    <ul>
+      <li>Provide accurate and complete registration information</li>
+      <li>Maintain the security and confidentiality of your account credentials</li>
+      <li>Notify us immediately of any unauthorized use of your account</li>
+      <li>Be responsible for all activity that occurs under your account</li>
+    </ul>
+    <p>We reserve the right to suspend or terminate accounts that provide false information or violate these Terms.</p>
+  </div>
+
+  <div class="legal-card">
+    <h2>4. User Responsibilities</h2>
+    <p>As a user of Odontist+, you are responsible for:</p>
+    <ul>
+      <li>Ensuring all patient data entered into the platform is accurate and updated</li>
+      <li>Obtaining proper patient consent before entering their personal or medical information</li>
+      <li>Complying with all applicable laws, regulations, and professional standards governing patient data in your jurisdiction</li>
+      <li>Maintaining appropriate backups of critical clinical data</li>
+      <li>Using the Service only for lawful dental practice management purposes</li>
+    </ul>
+    <p>You acknowledge that you, not Odontist+, are the data controller for patient records entered into the platform.</p>
+  </div>
+
+  <div class="legal-card">
+    <h2>5. Acceptable Use</h2>
+    <p>You agree not to use the Service to:</p>
+    <ul>
+      <li>Upload or transmit harmful, illegal, or misleading content</li>
+      <li>Attempt to gain unauthorized access to any part of the Service or its infrastructure</li>
+      <li>Reverse engineer, decompile, or disassemble any component of the platform</li>
+      <li>Share your login credentials with unauthorized individuals</li>
+      <li>Use automated tools, bots, or scrapers to extract data from the Service</li>
+      <li>Interfere with or disrupt the integrity or performance of the Service</li>
+      <li>Use the Service for any purpose other than legitimate dental clinic management</li>
+    </ul>
+    <p>Violation of the acceptable use policy may result in immediate account suspension or termination.</p>
+  </div>
+
+  <div class="legal-card">
+    <h2>6. Data Usage &amp; Privacy</h2>
+    <p>Odontist+ collects and processes certain data to provide its services. This includes your phone number, account information, and clinic data you enter into the platform.</p>
+    <p>Your data is stored securely using Google Firebase infrastructure. We do not sell, rent, or trade your personal data or patient data to any third party for commercial purposes.</p>
+    <p>For full details on how we collect, store, and use your data, please review our <a href="privacy.html">Privacy Policy</a>.</p>
+    <div class="highlight-box">
+      <p>Patient health data entered into Odontist+ remains your property and under your control. We act as a data processor on your behalf.</p>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <h2>7. Subscription &amp; Payments</h2>
+    <p>Odontist+ is offered on a subscription basis (Solo and Pro plans). By subscribing:</p>
+    <ul>
+      <li>You authorize us to charge your selected payment method on a recurring basis</li>
+      <li>Subscriptions automatically renew unless cancelled before the renewal date</li>
+      <li>All prices are listed in Indian Rupees (₹) and are subject to applicable taxes</li>
+      <li>Refunds are handled on a case-by-case basis — contact <a href="mailto:support@odontistplus.com">support@odontistplus.com</a> within 7 days of a charge for refund requests</li>
+    </ul>
+    <p>We reserve the right to modify pricing with 30 days advance notice to active subscribers.</p>
+  </div>
+
+  <div class="legal-card">
+    <h2>8. Intellectual Property</h2>
+    <p>All content, design, trademarks, software, and intellectual property associated with Odontist+ are owned by or licensed to us. You are granted a limited, non-exclusive, non-transferable licence to use the Service solely for your dental practice management.</p>
+    <p>You retain ownership of all patient and clinic data you enter into the platform.</p>
+  </div>
+
+  <div class="legal-card">
+    <h2>9. Limitation of Liability</h2>
+    <p>To the maximum extent permitted by applicable law, Odontist+ and its operators shall not be liable for:</p>
+    <ul>
+      <li>Any indirect, incidental, special, or consequential damages</li>
+      <li>Loss of data, revenue, or profits arising from use of the Service</li>
+      <li>Any clinical decisions made based on information within the platform</li>
+      <li>Service interruptions due to technical issues, maintenance, or force majeure</li>
+    </ul>
+    <p>The Service is provided as a management tool. Clinical decisions remain entirely the responsibility of the treating dental professional.</p>
+  </div>
+
+  <div class="legal-card">
+    <h2>10. Termination</h2>
+    <p>You may terminate your account at any time by contacting us at <a href="mailto:support@odontistplus.com">support@odontistplus.com</a>.</p>
+    <p>We reserve the right to suspend or terminate your account without prior notice if:</p>
+    <ul>
+      <li>You violate any provision of these Terms</li>
+      <li>We are required to do so by law or regulatory authority</li>
+      <li>Your account exhibits fraudulent or abusive behaviour</li>
+    </ul>
+    <p>Upon termination, your right to use the Service ceases. You may request an export of your data within 30 days of account closure.</p>
+  </div>
+
+  <div class="legal-card">
+    <h2>11. Governing Law</h2>
+    <p>These Terms are governed by and construed in accordance with the laws of India. Any disputes arising from these Terms shall be subject to the exclusive jurisdiction of the courts located in India.</p>
+  </div>
+
+  <div class="legal-card">
+    <h2>12. Contact Us</h2>
+    <p>If you have any questions about these Terms of Service, please contact us:</p>
+    <ul>
+      <li>Email: <a href="mailto:support@odontistplus.com">support@odontistplus.com</a></li>
+      <li>Website: <a href="https://odontistplus.com">odontistplus.com</a></li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Odontist Plus. All rights reserved. Built by a dentist for dentists.</p>
+  <div class="footer-links">
+    <a href="terms.html">Terms of Service</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="agreement.html">User Agreement</a>
+  </div>
+</footer>
+
+</body>
+</html>
