@@ -1463,6 +1463,7 @@ display:none;
 .patient-mobile-image img {
   width: 100%;
   height: auto;
+  object-fit: contain;
   display: block;
   border-radius: 24px;
 }
@@ -1601,6 +1602,177 @@ display:none;
   
   .odontogram-app-image {
     max-height: 320px;
+  }
+}
+
+/* Appointments Section - Mobile Optimization */
+.appointments-feature-row {
+  position: relative;
+}
+
+.appointments-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.appointments-mobile-only {
+  display: none;
+}
+
+.appointments-desktop-only {
+  display: block;
+}
+
+.appointments-mobile-image {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(92, 124, 255, 0.1);
+  background: linear-gradient(180deg, rgba(18, 20, 44, 0.9) 0%, rgba(12, 13, 31, 0.95) 100%);
+  border: 1px solid rgba(160, 170, 255, 0.15);
+}
+
+.appointments-mobile-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 24px;
+}
+
+/* OCR Section - Mobile Optimization */
+.ocr-feature-row {
+  position: relative;
+}
+
+.ocr-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ocr-mobile-only {
+  display: none;
+}
+
+.ocr-desktop-only {
+  display: block;
+}
+
+.ocr-mobile-image {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(92, 124, 255, 0.1);
+  background: linear-gradient(180deg, rgba(18, 20, 44, 0.9) 0%, rgba(12, 13, 31, 0.95) 100%);
+  border: 1px solid rgba(160, 170, 255, 0.15);
+}
+
+.ocr-mobile-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 24px;
+}
+
+/* Mobile: Hide desktop mockups, show static images */
+@media (max-width: 768px) {
+  /* Appointments Mobile */
+  .appointments-desktop-only {
+    display: none !important;
+  }
+  
+  .appointments-mobile-only {
+    display: block !important;
+  }
+  
+  .appointments-feature-row {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 32px;
+  }
+  
+  .appointments-feature-row .feature-content {
+    order: 2;
+  }
+  
+  .appointments-feature-row .feature-visual {
+    order: 1;
+  }
+  
+  .appointments-mobile-image {
+    max-width: 320px;
+    border-radius: 20px;
+  }
+  
+  .appointments-mobile-image img {
+    border-radius: 20px;
+  }
+  
+  /* OCR Mobile */
+  .ocr-desktop-only {
+    display: none !important;
+  }
+  
+  .ocr-mobile-only {
+    display: block !important;
+  }
+  
+  .ocr-feature-row {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 32px;
+  }
+  
+  .ocr-feature-row .feature-content {
+    order: 2;
+  }
+  
+  .ocr-feature-row .feature-visual {
+    order: 1;
+  }
+  
+  .ocr-mobile-image {
+    max-width: 320px;
+    border-radius: 20px;
+  }
+  
+  .ocr-mobile-image img {
+    border-radius: 20px;
+  }
+}
+
+/* Tablet: Keep desktop layout */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .appointments-desktop-only,
+  .ocr-desktop-only {
+    display: block !important;
+  }
+  
+  .appointments-mobile-only,
+  .ocr-mobile-only {
+    display: none !important;
+  }
+}
+
+/* Desktop: Ensure full animations */
+@media (min-width: 1024px) {
+  .appointments-desktop-only,
+  .ocr-desktop-only {
+    display: block !important;
+  }
+  
+  .appointments-mobile-only,
+  .ocr-mobile-only {
+    display: none !important;
   }
 }
 
@@ -5760,12 +5932,9 @@ No credit card required <span>·</span> Setup in under 2 minutes
 </div>
 </div>
 </div>
-<!-- Mobile: Static image (lazy loaded WebP with PNG fallback) -->
+<!-- Mobile: Static image -->
 <div class="patient-mobile-image patient-mobile-only">
-<picture>
-<source srcset="images/patient-management-mobile.webp" type="image/webp">
-<img src="images/patient-management-mobile.png" alt="Patient Management Interface showing patient list with search, filters, and contact actions" loading="lazy" width="360" height="400">
-</picture>
+<img src="images/patient-tracking-interface.png" alt="patient UI" loading="lazy" class="patient-app-image">
 </div>
 </div>
 </div>
@@ -5791,7 +5960,7 @@ No credit card required <span>·</span> Setup in under 2 minutes
 </div>
 </div>
 
-<div class="feature-row">
+<div class="feature-row appointments-feature-row">
 <div class="feature-content">
 <div class="feature-number">03</div>
 <h3 class="feature-headline">Smart Appointments,<br><span class="gradient-accent">AI-Optimized.</span></h3>
@@ -5802,11 +5971,11 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <li class="feature-signal"><span class="signal-icon">✓</span> Smart reminders via SMS, email, and WhatsApp</li>
 </ul>
 </div>
-<div class="feature-visual">
-<div class="feature-glow-depth"></div>
-<div class="glass-panel-blur" style="width:300px;height:280px;"></div>
-<div class="feature-glow"></div>
-<div class="glass-panel calendar-mock">
+<div class="feature-visual appointments-visual">
+<div class="feature-glow-depth appointments-desktop-only"></div>
+<div class="glass-panel-blur appointments-desktop-only" style="width:300px;height:280px;"></div>
+<div class="feature-glow appointments-desktop-only"></div>
+<div class="glass-panel calendar-mock appointments-desktop-only">
 <div class="calendar-header">
 <span class="calendar-title">March 2024</span>
 <div class="calendar-nav">
@@ -5847,10 +6016,14 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <div class="appointment-patient">Sarah Johnson - Cleaning</div>
 </div>
 </div>
+<!-- Mobile: Static image -->
+<div class="appointments-mobile-image appointments-mobile-only">
+<img src="images/dashboard.png" alt="Appointments" loading="lazy" class="appointments-app-image">
+</div>
 </div>
 </div>
 
-<div class="feature-row">
+<div class="feature-row ocr-feature-row">
 <div class="feature-content">
 <div class="feature-number">04</div>
 <h3 class="feature-headline">AI Prescription OCR,<br><span class="gradient-accent">Instant Intelligence.</span></h3>
@@ -5861,11 +6034,11 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <li class="feature-signal"><span class="signal-icon">✓</span> Auto-link prescriptions to patient records</li>
 </ul>
 </div>
-<div class="feature-visual">
-<div class="feature-glow-depth"></div>
-<div class="glass-panel-blur" style="width:360px;height:260px;"></div>
-<div class="feature-glow"></div>
-<div class="glass-panel ocr-mock">
+<div class="feature-visual ocr-visual">
+<div class="feature-glow-depth ocr-desktop-only"></div>
+<div class="glass-panel-blur ocr-desktop-only" style="width:360px;height:260px;"></div>
+<div class="feature-glow ocr-desktop-only"></div>
+<div class="glass-panel ocr-mock ocr-desktop-only">
 <div class="mock-header">
 <span class="mock-title">Prescription Scanner</span>
 <span style="color:#4ade80;font-size:11px;">● Ready</span>
@@ -5876,12 +6049,12 @@ No credit card required <span>·</span> Setup in under 2 minutes
 <div class="ocr-upload-hint">Supports JPG, PNG, PDF</div>
 </div>
 </div>
+<!-- Mobile: Static image -->
+<div class="ocr-mobile-image ocr-mobile-only">
+<img src="images/dashboard.png" alt="OCR Scanner" loading="lazy" class="ocr-app-image">
 </div>
 </div>
 </div>
-</section>
-
-<!-- PRICING SECTION -->
 
 <section id="pricing" class="pricing-section">
 <div class="pricing-nebula-bg"></div>
